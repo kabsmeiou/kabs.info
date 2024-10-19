@@ -14,7 +14,7 @@ function Header() {
 
   return (
     <>
-    <div className='flex h-auto w-full justify-center p-2'>
+    <div className='header flex h-auto w-full justify-center p-2'>
       <div className='flex flex-col md:flex-row items-center w-full md:w-[80%] lg:w-[50%] h-full rounded-3xl shadow-md bg-[#F5F5F5] p-2 md:p-6'>
         <div className='w-[8.25rem] h-auto md:w-32 md:h-32 rounded-2xl border-2 mb-4 md:mb-0 md:me-8 overflow-hidden'>
           <img className='w-full h-full object-cover' src={me} alt="Kabs"/>
@@ -29,7 +29,7 @@ function Header() {
           <p className='text-xs text-center md:text-left opacity-70'>
             Naga City, Camarines Sur, Philippines
           </p>
-          <div className='flex gap-x-2 mt-2'>
+          <div className='flex flex-wrap gap-2 mt-2'>
             <img src={fb} alt="Facebook"/>
             <img src={github} alt="GitHub"/>
             <img src={linkn} alt="LinkedIn"/>

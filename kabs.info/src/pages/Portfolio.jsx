@@ -6,6 +6,7 @@ function Portfolio() {
   const [projects, setProjects] = useState([]); // hold the list of projects
   const [isLoading, setIsLoading] = useState(false); // manage loading status
   const [error, setError] = useState(null); // manage errors
+  const [filter, setFilter] = useState(null); // for filters
 
   // get the list of projects
   useEffect(() => {
@@ -28,8 +29,12 @@ function Portfolio() {
       }
 
       const data = await res.json();
-      setProjects(data); // assuming data is an array of projects
       console.log(projects);
+      if (filter != null) {
+        // filter data if viewer has clicked a skill tag among the options
+        const data = data.filter(project => project.skillTags.includes(filter));
+      }
+      setProjects(data); // assuming data is an array of projects
     } catch (error) {
       console.error(error);
       setError(error.message); // set error state if fetch fails
@@ -38,23 +43,29 @@ function Portfolio() {
     }
   };
 
+  const filters = ['Web-dev', 'Completed', 'Ongoing']
 
   return (
-    <div className='flex w-full h-auto justify-center p-4'>
-      <div className='flex flex-col w-full items-center md:w-[80%] lg:w-[50%] gap-y-8'>
+    <div className='flex w-full h-auto justify-center p-4 overflow-auto'>
+      <div className='inter flex flex-col w-full items-center md:w-[80%] lg:w-[50%] gap-y-4'>
+        <div className="flex flex-wrap text-sm gap-x-4 gap-y-2 -mt-2 -mb-2">
+        {filters.map((skill, index) => (
+          <p key={index} className="px-2 py-1 bg-[#E8E8E8] rounded-2xl">{skill}</p>
+        ))}
+        </div>
         {projects.map((project, index) => (
-          <div key={index} className='w-[90%] h-auto shadow-md p-4'>
-            <p className='blue-text text-lg font-semibold'>
+          <div key={index} className='w-[90%] h-auto shadow-md py-6 px-8 rounded-2xl'>
+            <p className='blue-text text-xl font-bold'>
               {project.projectTitle}
             </p>
-            <p className='opacity-75 mt-1'>
+            <p className='opacity-75 text-base mt-2'>
               {project.description}
             </p>
-            <div className="blue-text flex items-center gap-x-1">
+            <div className="blue-text flex items-center gap-x-1 mt-1">
               <a href={project.projectLink} target="_blank" className="links text-xs">Check it out at Github</a>
               <img className="w-3 h-3" src={goToLink} alt="LinkTo"></img>
             </div>
-            <div className="flex flex-wrap gap-x-2 text-xs mt-2">
+            <div className="flex flex-wrap gap-2 text-xs mt-4">
             {/* 
               loop through the skills 
             */}

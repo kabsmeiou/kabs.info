@@ -6,12 +6,12 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif; /* Fallback to sans-serif if Lato fails to load */
+  font-family: 'Inter', sans-serif; /* Fallback to sans-serif if Lato fails to load */
   color: #2D2929;
 }
 
-.links {
-  font-family: 'Inter', sans-serif; /* Fallback to sans-serif if Lato fails to load */
+.header {
+  font-family: 'Lato', sans-serif; /* Fallback to sans-serif if Lato fails to load */
 }
 
 .blue-text {
