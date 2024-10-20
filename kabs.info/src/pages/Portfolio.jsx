@@ -8,10 +8,10 @@ function Portfolio() {
   const [error, setError] = useState(null); // manage errors
   const [filter, setFilter] = useState(null); // for filters
 
-  // get the list of projects
+  // get the list of projects, add filter state as one of the triggers
   useEffect(() => {
     getProjects();
-  }, []);
+  }, [filter]);
 
   // fetch projects
   const getProjects = async () => {
@@ -28,11 +28,11 @@ function Portfolio() {
         throw new Error(`Error: ${res.status} ${res.statusText}`);
       }
 
-      const data = await res.json();
+      var data = await res.json();
       console.log(projects);
       if (filter != null) {
         // filter data if viewer has clicked a skill tag among the options
-        const data = data.filter(project => project.skillTags.includes(filter));
+        data = data.filter(project => project.skillTags.includes(filter));
       }
       setProjects(data); // assuming data is an array of projects
     } catch (error) {
@@ -48,10 +48,13 @@ function Portfolio() {
   return (
     <div className='flex w-full h-auto justify-center p-4 overflow-auto'>
       <div className='inter flex flex-col w-full items-center md:w-[80%] lg:w-[50%] gap-y-4'>
-        <div className="flex flex-wrap text-sm gap-x-4 gap-y-2 -mt-2 -mb-2">
-        {filters.map((skill, index) => (
-          <p key={index} className="px-2 py-1 bg-[#E8E8E8] rounded-2xl">{skill}</p>
-        ))}
+        <div className="select-none flex flex-wrap text-sm gap-x-4 gap-y-2 -mt-2 -mb-2">
+        {/* list of filters */}
+          {filters.map((skill, index) => (
+            <p key={index} 
+            className={`cursor-pointer px-2 py-1 rounded-2xl hover:bg-[#979799] ${filter == skill ? 'bg-[#b5c0cf]' : 'bg-[#E8E8E8]'}`}
+            onClick={() => filter == skill ? setFilter(null) : setFilter(skill)}>{skill}</p>
+          ))}
         </div>
         {projects.map((project, index) => (
           <div key={index} className='w-[90%] h-auto shadow-md py-6 px-8 rounded-2xl'>
