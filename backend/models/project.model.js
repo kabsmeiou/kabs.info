@@ -7,7 +7,8 @@ const projectSchema = new Schema({
   description: {type: String, required: true},
   skillTags: {type: Array, required: true},
   projectLink: {type: String, required: true},
-  date: {type: Date, required: true}
+  date: {type: Date, required: true},
+  completed: {type: Date, default: null}
 }, {
   timestamps: true,
 });

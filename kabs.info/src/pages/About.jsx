@@ -1,6 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 function About() {
+  const [isLoading, setIsLoading] = useState(false); // manage loading status
+  const [skillTags, setSkillTags] = useState([]); // for unique skill tags
+
+  // fetch projects
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const getProjects = async () => {
+    setIsLoading(true);
+    const path = "/api/projects/";
+    console.log(path);
+
+    try {
+      const res = await fetch(path, {
+        method: "GET",
+      }); 
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
+      }
+
+      var data = await res.json();
+      // store unique skill tags in useState
+      const uniqueSkillTags = await [
+        ...new Set(
+          data
+            .flatMap((project) => project.skillTags) // extract all skill tags
+            .filter(tag => (tag !== 'Completed' && tag !== 'Ongoing')) // exclude specific tags
+        )
+      ];
+      // console.log(uniqueSkillTags.filter(tag => tag != 'Completed'));
+      setSkillTags(uniqueSkillTags);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false); // set loading to false regardless of success or failure
+    }
+  };
+
   return (
     <>
       <div className='flex w-full h-auto justify-center p-4'>
@@ -48,6 +88,14 @@ function About() {
           <p className='text-lg md:text-xl font-bold'>
               Skill Set
           </p>
+          <div className="select-none flex flex-wrap text-sm gap-x-4 gap-y-2 -mt-2 -mb-2">
+            {/* list of skills */}
+            {skillTags.map((skill, index) => (
+              <p key={index} 
+              className={`cursor-pointer px-2 py-1 rounded-2xl hover:bg-[#979799] bg-[#E8E8E8]`}
+              >{skill}</p>
+            ))}
+          </div>
         </div>
       </div>
     </>

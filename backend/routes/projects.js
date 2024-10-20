@@ -59,4 +59,22 @@ router.route('/update/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+// marking specific project as completed/unfinished
+router.route('/status/:id').post((req, res) => {
+  Project.findById(req.params.id)
+    .then(project => {
+      // set completed as the current date or set to null.
+      if (project.completed === null) {
+        project.completed = new Date();
+      } else {
+        project.completed = null;
+      }
+      
+      project.save()
+        .then(() => res.json('Project status toggled.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 module.exports = router;
