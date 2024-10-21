@@ -11,6 +11,9 @@ function Timeline() {
   const [projectTimeline, setProjectTimeline] = useState({});
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear().toString());
   const [yearList, setYearList] = useState([]);
+  const apiUrl = import.meta.env.MODE === 'production'
+  ? 'https://kabs-info-backend.onrender.com'
+  : '/api';
 
   // fetch projects
   useEffect(() => {
@@ -19,7 +22,7 @@ function Timeline() {
 
   const getProjects = async () => {
     setIsLoading(true);
-    const path = "/api/projects/";
+    const path = `${apiUrl}/projects/`;
     console.log(path);
 
     try {

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 function About() {
   const [isLoading, setIsLoading] = useState(false); // manage loading status
   const [skillTags, setSkillTags] = useState([]); // for unique skill tags
+  const apiUrl = import.meta.env.MODE === 'production'
+  ? 'https://kabs-info-backend.onrender.com'
+  : '/api';
 
   // fetch projects
   useEffect(() => {
@@ -11,7 +14,7 @@ function About() {
 
   const getProjects = async () => {
     setIsLoading(true);
-    const path = "/api/projects/";
+    const path = `${apiUrl}/projects/`;
     console.log(path);
 
     try {

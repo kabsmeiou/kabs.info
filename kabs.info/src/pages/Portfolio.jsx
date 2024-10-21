@@ -7,6 +7,9 @@ function Portfolio() {
   const [isLoading, setIsLoading] = useState(false); // manage loading status
   const [error, setError] = useState(null); // manage errors
   const [filter, setFilter] = useState(null); // for filters
+  const apiUrl = import.meta.env.MODE === 'production'
+  ? 'https://kabs-info-backend.onrender.com'
+  : '/api';
 
   // get the list of projects, add filter state as one of the triggers
   useEffect(() => {
@@ -16,7 +19,7 @@ function Portfolio() {
   // fetch projects
   const getProjects = async () => {
     setIsLoading(true);
-    const path = "/api/projects/";
+    const path = `${apiUrl}/projects/`;
     console.log(path);
 
     try {
