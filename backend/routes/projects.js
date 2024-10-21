@@ -65,7 +65,7 @@ router.route('/status/:id').post((req, res) => {
     .then(project => {
       // set completed as the current date or set to null.
       if (project.completed === null) {
-        project.completed = new Date();
+        project.completed = Date.parse(req.body.completedDate);
       } else {
         project.completed = null;
       }
