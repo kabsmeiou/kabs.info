@@ -11,9 +11,11 @@ function Timeline() {
   const [projectTimeline, setProjectTimeline] = useState({});
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear().toString());
   const [yearList, setYearList] = useState([]);
-  const apiUrl = import.meta.env.MODE === 'production'
-  ? 'https://kabs-info-backend.onrender.com'
-  : '/api';
+  const apiUrl = 'https://kabs-info-backend.onrender.com';
+  
+  // const apiUrl = import.meta.env.MODE === 'production'
+  // ? 'https://kabs-info-backend.onrender.com'
+  // : '/api';
 
   // fetch projects
   useEffect(() => {
