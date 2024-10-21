@@ -27,10 +27,9 @@ try {
 
 // api routes
 const projectsRouter = require('./routes/projects');
-const usersRouter = require('./routes/users');
+// const usersRouter = require('./routes/users');
 
 app.use('/projects', projectsRouter);
-app.use('/users', usersRouter);
 
 // start the server (listen to port)
 app.listen(port, () => {
