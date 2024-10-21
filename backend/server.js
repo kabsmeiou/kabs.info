@@ -2,9 +2,7 @@ import express from 'express'; // Use ES module syntax
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
- 
+import path from 'path'; 
 
 dotenv.config();
 
@@ -15,17 +13,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // const __dirname = path.resolve();
-// Get __dirname using import.meta.url
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Serve static files from the "build" directory
-app.use(express.static(join(__dirname, 'build')));
-
-// Handle all GET requests
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'build', 'index.html'));
-});
 
 // middleware
 app.use(cors());
