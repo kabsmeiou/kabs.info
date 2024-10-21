@@ -8,9 +8,13 @@ dotenv.config();
 
 import projectsRoutes from "./routes/projects.js";
 
+// express server
+const app = express();
+const port = process.env.PORT || 5000;
+
+const __dirname = path.resolve();
 // Serve static files from the "build" directory
 app.use(express.static(path.join(__dirname, 'build')));
-const port = process.env.PORT || 5000;
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
