@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 //route 
-app.use('/api/projects', projectsRoutes);
+app.use('/projects', projectsRoutes);
 
 // database / connect to uri from mongodb atlas
 try {
