@@ -1,5 +1,7 @@
-const router = require('express').Router();
-let Project = require('../models/project.model');
+import express from 'express';
+import Project from '../models/project.model.js'; // Use the correct path to your model file
+
+const router = express.Router();
 
 // default route for projects that returns the list of projects
 router.route('/').get((req, res) => {
@@ -77,4 +79,4 @@ router.route('/status/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-module.exports = router;
+export default router;

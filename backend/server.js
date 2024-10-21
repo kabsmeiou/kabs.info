@@ -1,12 +1,18 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import express from 'express'; // Use ES module syntax
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
+import path from 'path'; 
 
-require('dotenv').config();
+dotenv.config();
+
+import projectsRoutes from "./routes/projects.js";
 
 // express server
 const app = express();
 const port = process.env.PORT || 5000;
+
+const __dirname = path.resolve();
 
 // middleware
 app.use(cors());
@@ -25,11 +31,15 @@ try {
   process.exit(1);
 }
 
-// api routes
-const projectsRouter = require('./routes/projects');
-// const usersRouter = require('./routes/users');
+app.use('/projects', projectsRoutes);
 
-app.use('/projects', projectsRouter);
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, "kabs.info/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "kabs.info", "dist", "index.html"));
+  })
+}
 
 // start the server (listen to port)
 app.listen(port, () => {
