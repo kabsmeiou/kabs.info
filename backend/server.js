@@ -12,7 +12,7 @@ import projectsRoutes from "./routes/projects.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 // middleware
 app.use(cors());
@@ -33,13 +33,13 @@ try {
 
 app.use('/projects', projectsRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, "kabs.info/dist")));
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, "kabs.info/dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "kabs.info", "dist", "index.html"));
-  })
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "kabs.info", "dist", "index.html"));
+//   })
+// }
 
 // start the server (listen to port)
 app.listen(port, () => {
