@@ -18,6 +18,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+//route 
+app.use('/api/projects', projectsRoutes);
+
 // database / connect to uri from mongodb atlas
 try {
   const uri = process.env.ATLAS_URI;
@@ -31,7 +34,7 @@ try {
   process.exit(1);
 }
 
-app.use('/projects', projectsRoutes);
+
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, "kabs.info/dist")));
