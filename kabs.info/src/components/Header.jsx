@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { useLocation, Link } from 'react-router-dom'
 
 import fb from '../assets/icons8-facebook-32.png'
@@ -11,6 +11,22 @@ import me from '../assets/mwe.jpg'
 function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [emailTooltipVisible, setEmailTooltipVisible] = useState(false);
+  const [phoneTooltipVisible, setPhoneTooltipVisible] = useState(false);
+  const [copied, setCopied] = useState(false); // track if the email was copied
+  const email = 'christiancabral010@gmail.com';
+  const phoneNumber = '+63 938 708 5239'
+
+  const handleCopy = (toCopy) => {
+    navigator.clipboard.writeText(toCopy)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  };
 
   return (
     <>
@@ -30,11 +46,35 @@ function Header() {
             Naga City, Camarines Sur, Philippines
           </p>
           <div className='flex flex-wrap gap-2 mt-2'>
-            <img src={fb} alt="Facebook"/>
-            <img src={github} alt="GitHub"/>
-            <img src={linkn} alt="LinkedIn"/>
-            <img src={mail} alt="Email"/>
-            <img src={phone} alt="Phone"/>
+            <a href={'https://www.facebook.com/kabsmeiou.chopin'} target="_blank" className="links text-xs"><img src={fb} alt="Facebook"/></a>
+            <a href={'https://github.com/kabsmeiou'} target="_blank" className="links text-xs"><img src={github} alt="GitHub"/></a>
+            <a href={'https://www.linkedin.com/in/cvcabral'} target="_blank" className="links text-xs"><img src={linkn} alt="LinkedIn"/></a>
+            <img
+              src={mail}
+              alt="Email"
+              className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              onMouseEnter={() => setEmailTooltipVisible(true)}
+              onMouseLeave={() => setEmailTooltipVisible(false)}
+              onClick={() => handleCopy(email)} // Copy email on click
+            />
+            {emailTooltipVisible && (
+              <div className="absolute left-1/2 transform -translate-x-44 -translate-y-8 bg-gray-700 text-white text-sm rounded py-1 px-2 mt-2">
+                {copied ? 'Copied!' : email} {/* Show "Copied!" if copied */}
+              </div>
+            )}
+            <img
+              src={phone}
+              alt="Phone"
+              className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              onMouseEnter={() => setPhoneTooltipVisible(true)}
+              onMouseLeave={() => setPhoneTooltipVisible(false)}
+              onClick={() => handleCopy(phoneNumber)} // Copy email on click
+            />
+            {phoneTooltipVisible && (
+              <div className="absolute left-1/2 transform -translate-x-32 -translate-y-8 bg-gray-700 text-white text-sm rounded py-1 px-2 mt-2">
+              {copied ? 'Copied!' : phoneNumber} {/* Show "Copied!" if copied */}
+              </div>
+            )}
           </div>
         </div>
       </div>
