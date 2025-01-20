@@ -3,14 +3,11 @@ import React, { useEffect, useState } from "react";
 import completed_icon from '../assets/icons8-task-completed-50.png'
 import idea_icon from '../assets/icons8-idea-50.png'
 
-
-
-
 function Timeline() {
   const [isLoading, setIsLoading] = useState(false); // manage loading status
   const [projectTimeline, setProjectTimeline] = useState({});
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear().toString());
   const [yearList, setYearList] = useState([]);
+  const [currentYear, setCurrentYear] = useState(null);
   // const apiUrl = 'https://kabs-info-backend.onrender.com';
 
   const apiUrl = import.meta.env.MODE === 'production'
@@ -30,7 +27,10 @@ function Timeline() {
     try {
       const res = await fetch(path, {
         method: "GET",
-      }); 
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        }
+      });
 
       if (!res.ok) {
         throw new Error(`Error: ${res.status} ${res.statusText}`);
@@ -73,22 +73,22 @@ function Timeline() {
           projectsByYearAndMonth[endYear][endMonth].push({ ...project, type: 'Completed' });
         }
       });
-
       // set state
       setProjectTimeline(projectsByYearAndMonth);
-      // console.log(Object.keys(projectsByYearAndMonth));
+      // set current year to the year of the latest project
+      console.log(Object.keys(projectsByYearAndMonth).sort((a, b) => b - a)[0]);
+      setCurrentYear(Object.keys(projectsByYearAndMonth).sort((a, b) => b - a)[0]);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false); // set loading to false regardless of success or failure
     }
   };
-  console.log(projectTimeline[currentYear]);
+  console.log("current year", currentYear);
 
   const months = ['January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'];
-
+    'September', 'October', 'November', 'December']
   return (
     <>
       <div className='flex w-full h-auto justify-center p-4'>
