@@ -54,7 +54,7 @@ function About() {
               About me
             </p>
             <p className='md:text-sm opacity-75 text-xs'>
-              I’m currently a 3rd Year Computer Science student in Ateneo de Naga University. I am an INTJ. I enjoy problem-solving, which is why I participate in competitive programming competitions quite often. Other than programming, I play the piano from time to time, engage in contact sports such as basketball, and play chess. Right now, I am learning about Machine Learning. I am aspiring to be a great Machine Learning Engineer.
+             I’m currently a 3rd-year computer science student at Ateneo de Naga University. I am an INTJ. I enjoy problem-solving, which is why I participate in competitive programming competitions quite often. Other than programming, I play the piano from time to time, engage in contact sports such as basketball, and play chess. Pleased to have you here!
             </p>
           </div>
           {/* This is the education section */}
